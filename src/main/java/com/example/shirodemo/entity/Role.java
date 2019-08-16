@@ -1,5 +1,8 @@
 package com.example.shirodemo.entity;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 /**
@@ -14,6 +17,7 @@ public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id",type = IdType.AUTO)
     private Long id;
     private String description;
     private String role;

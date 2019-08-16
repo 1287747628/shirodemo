@@ -10,11 +10,9 @@ import com.example.shirodemo.vo.ListResponse;
 import com.example.shirodemo.vo.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -52,6 +50,47 @@ public class UserController {
         Page<User> users = userService.selectPage(new Page<>(pageNum, pageSize));
         response.setList(users.getRecords());
         response.setTotal(users.getRecords().size());
+        return response;
+    }
+
+    @RequestMapping(path = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public Response insert(@RequestBody User user) {
+        Response response = new Response(StatusCode.UI.UI_0);
+        userService.insert(user);
+        return response;
+    }
+
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Response delete(@RequestBody User user) {
+        Response response = new Response(StatusCode.UI.UI_0);
+        userService.deleteById(user.getId());
+        return response;
+    }
+
+    @RequestMapping(path = "/select", method = RequestMethod.POST)
+    @ResponseBody
+    public ListResponse<User> select(@RequestBody User user) {
+        ListResponse<User> response = new ListResponse<>(StatusCode.UI.UI_0);
+        EntityWrapper<User> ewUser = new EntityWrapper<>();
+        ewUser.where("valid={0}", user.getValid()).or("id={0}", user.getId());
+//        if (user.getId() != null) {
+//            ewUser.eq("id", user.getId());
+//        }
+//        if (user.getEmail() != null) {
+//            ewUser.eq("email", user.getEmail());
+//        }
+//        if (user.getName() != null) {
+//            ewUser.eq("name", user.getName());
+//        }
+//        if (user.getValid() != null) {
+//            ewUser.eq("valid", user.getValid());
+//        }
+        //
+        Page<User> users = userService.selectPage(new Page<>(0, Integer.MAX_VALUE), ewUser);
+        response.setTotal(users.getRecords().size());
+        response.setList(users.getRecords());
         return response;
     }
 
