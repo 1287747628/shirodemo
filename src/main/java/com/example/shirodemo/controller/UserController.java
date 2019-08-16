@@ -61,6 +61,15 @@ public class UserController {
         return response;
     }
 
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Response update(@RequestBody User user) {
+        Response response = new Response(StatusCode.UI.UI_0);
+        //userService.update(user, new EntityWrapper<User>().where("id={0}", user.getId()));
+        userService.updateForSet("mob='"+user.getMob()+"'", new EntityWrapper<User>().where("id={0}", user.getId()));
+        return response;
+    }
+
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public Response delete(@RequestBody User user) {

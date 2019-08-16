@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类,可自定义方法，并添加事务
  * </p>
  *
  * @author jocken
@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    @Override
+    public void updateByUserId() {
+
+    }
 }
