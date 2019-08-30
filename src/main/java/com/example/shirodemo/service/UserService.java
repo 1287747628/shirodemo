@@ -3,6 +3,8 @@ package com.example.shirodemo.service;
 import com.example.shirodemo.entity.User;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 服务类
@@ -13,6 +15,8 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface UserService extends IService<User> {
 
-    public void updateByUserId();
+    void updateByUserId();
+
+    List<User> selectByName(String name,Integer valid);
 
 }

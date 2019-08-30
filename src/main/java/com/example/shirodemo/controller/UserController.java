@@ -103,5 +103,15 @@ public class UserController {
         return response;
     }
 
+    @RequestMapping(path = "/select/byName", method = RequestMethod.POST)
+    @ResponseBody
+    public ListResponse<User> selectByName(@RequestBody User user) {
+        ListResponse<User> response = new ListResponse<>(StatusCode.UI.UI_0);
+        List<User> users = userService.selectByName(user.getName(), user.getValid());
+        response.setTotal(users.size());
+        response.setList(users);
+        return response;
+    }
+
 }
 
