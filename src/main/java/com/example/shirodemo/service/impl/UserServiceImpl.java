@@ -36,4 +36,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Role role = roleService.selectById(1);
         return baseMapper.selectByName(name,valid);
     }
+
+    @Override
+    public List<User> selectRestAll() {
+        return baseMapper.selectRestAll();
+    }
 }

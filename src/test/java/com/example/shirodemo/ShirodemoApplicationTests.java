@@ -12,9 +12,9 @@ public class ShirodemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		CodeGenerator gse = new CodeGenerator();
-		//要给那些表生成
-		gse.generateByTables(false,"user", "user_role","role_permission","role","permission");
+		// CodeGenerator gse = new CodeGenerator();
+		// 要给那些表生成
+		// gse.generateByTables(false,"user", "user_role","role_permission","role","permission");
 	}
 
 }

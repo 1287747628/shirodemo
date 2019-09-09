@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jocken
@@ -23,6 +24,8 @@ public class User implements Serializable {
     private String mob;
     private String email;
     private Integer valid;
+    private String password;
+    private Date pwdUpdateTime;
 
 
     public Long getId() {
@@ -65,14 +68,32 @@ public class User implements Serializable {
         this.valid = valid;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getPwdUpdateTime() {
+        return pwdUpdateTime;
+    }
+
+    public void setPwdUpdateTime(Date pwdUpdateTime) {
+        this.pwdUpdateTime = pwdUpdateTime;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-        ", id=" + id +
-        ", name=" + name +
-        ", mob=" + mob +
-        ", email=" + email +
-        ", valid=" + valid +
-        "}";
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mob='" + mob + '\'' +
+                ", email='" + email + '\'' +
+                ", valid=" + valid +
+                ", password='" + password + '\'' +
+                ", pwdUpdateTime=" + pwdUpdateTime +
+                '}';
     }
 }

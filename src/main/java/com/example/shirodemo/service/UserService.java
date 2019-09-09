@@ -19,4 +19,6 @@ public interface UserService extends IService<User> {
 
     List<User> selectByName(String name,Integer valid);
 
+    List<User> selectRestAll();
+
 }
