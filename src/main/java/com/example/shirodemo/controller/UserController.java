@@ -1,17 +1,16 @@
 package com.example.shirodemo.controller;
 
-
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.example.shirodemo.constants.ProjectConstant;
 import com.example.shirodemo.constants.StatusCode;
 import com.example.shirodemo.entity.User;
+import com.example.shirodemo.service.RedisService;
 import com.example.shirodemo.service.UserService;
 import com.example.shirodemo.vo.ListResponse;
 import com.example.shirodemo.vo.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
@@ -29,10 +28,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Resource
     private UserService userService;
+    @Resource
+    private RedisService redisService;
+    @Resource
+    private ProjectConstant projectConstant;
 
     @RequestMapping("/all")
     @ResponseBody
@@ -66,7 +67,7 @@ public class UserController {
     public Response update(@RequestBody User user) {
         Response response = new Response(StatusCode.UI.UI_0);
         //userService.update(user, new EntityWrapper<User>().where("id={0}", user.getId()));
-        userService.updateForSet("mob='"+user.getMob()+"'", new EntityWrapper<User>().where("id={0}", user.getId()));
+        userService.updateForSet("mob='" + user.getMob() + "'", new EntityWrapper<User>().where("id={0}", user.getId()));
         return response;
     }
 
@@ -110,6 +111,23 @@ public class UserController {
         List<User> users = userService.selectByName(user.getName(), user.getValid());
         response.setTotal(users.size());
         response.setList(users);
+        return response;
+    }
+
+    @RequestMapping("/test/redis")
+    @ResponseBody
+    public Response testRest() {
+        Response response = new Response(StatusCode.UI.UI_0);
+        String value = redisService.getMap("testThree", "three");
+        System.out.println(">>> " + JSON.toJSONString(value));
+        return response;
+    }
+
+    @RequestMapping("/test/constant")
+    @ResponseBody
+    public Response testConstant() {
+        Response response = new Response(StatusCode.UI.UI_0);
+        System.out.println(">>> " + projectConstant);
         return response;
     }
 

@@ -1,12 +1,8 @@
-package com.example.shirodemo.utils;
-
-import sun.security.krb5.internal.TGSRep;
+package com.example.shirodemo.test.synchrized;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 public class SyncHashMapTest implements Runnable {
 
