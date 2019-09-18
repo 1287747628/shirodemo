@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -118,7 +120,8 @@ public class UserController {
     @ResponseBody
     public Response testRest() {
         Response response = new Response(StatusCode.UI.UI_0);
-        String value = redisService.getMap("testThree", "three");
+        redisService.putMap("three", "threeKey", "threeValue", 500);
+        String value = redisService.getMap("three","threeKey");
         System.out.println(">>> " + JSON.toJSONString(value));
         return response;
     }

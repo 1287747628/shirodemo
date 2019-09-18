@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisServiceImpl implements RedisService, InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisServiceImpl.class);
+
     private volatile boolean redisStatus = true;
 
     @Autowired
@@ -37,17 +38,26 @@ public class RedisServiceImpl implements RedisService, InitializingBean {
 
     @Override
     public <T> T get(String key, Class<T> cls) {
+        if (!redisStatus) {
+            return null;
+        }
         String value = redisTemplate.opsForValue().get(key);
         return JSON.parseObject(value, cls);
     }
 
     @Override
     public Map<Object, Object> getMap(String key) {
+        if (!redisStatus) {
+            return null;
+        }
         return redisTemplate.opsForHash().entries(key);
     }
 
     @Override
     public String getMap(String key, String field) {
+        if (!redisStatus) {
+            return null;
+        }
         Object obj = redisTemplate.opsForHash().get(key, field);
         if (obj == null) {
             return null;
@@ -63,7 +73,13 @@ public class RedisServiceImpl implements RedisService, InitializingBean {
     @Override
     public boolean put(String key, Object obj, int seconds) {
         try {
-            redisTemplate.opsForValue().set(key, JSON.toJSONString(obj), seconds, TimeUnit.SECONDS);
+            if (!redisStatus) {
+                return false;
+            }
+            redisTemplate.opsForValue().set(key, JSON.toJSONString(obj));
+            if (seconds > 0) {
+                redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+            }
             return true;
         } catch (Exception e) {
             logger.error("", e);
@@ -73,14 +89,19 @@ public class RedisServiceImpl implements RedisService, InitializingBean {
 
     @Override
     public boolean putMap(String key, Map<String, String> map) {
-        return put(key, map, -1);
+        return putMap(key, map, -1);
     }
 
     @Override
     public boolean putMap(String key, Map<String, String> map, int seconds) {
         try {
+            if (!redisStatus) {
+                return false;
+            }
             redisTemplate.opsForHash().putAll(key, map);
-            redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+            if (seconds > 0) {
+                redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+            }
             return true;
         } catch (Exception e) {
             logger.error("", e);
@@ -96,8 +117,13 @@ public class RedisServiceImpl implements RedisService, InitializingBean {
     @Override
     public boolean putMap(String key, String field, String value, int seconds) {
         try {
+            if (!redisStatus) {
+                return false;
+            }
             redisTemplate.opsForHash().put(key, field, value);
-            redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+            if (seconds > 0) {
+                redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+            }
             return true;
         } catch (Exception e) {
             logger.error("", e);
@@ -118,9 +144,10 @@ public class RedisServiceImpl implements RedisService, InitializingBean {
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(2000L);
+                    Thread.sleep(30000L);
                     redisTemplate.hasKey("test");
                     redisStatus = true;
+                    logger.info(">>> redis is running");
                 } catch (Exception e) {
                     logger.error("", e);
                 }

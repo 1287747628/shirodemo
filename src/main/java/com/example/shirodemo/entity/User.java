@@ -1,5 +1,6 @@
 package com.example.shirodemo.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 
@@ -25,6 +26,7 @@ public class User implements Serializable {
     private String email;
     private Integer valid;
     private String password;
+    @TableField("pwdUpdateTime")
     private Date pwdUpdateTime;
 
 
