@@ -4,6 +4,7 @@ import com.example.shirodemo.config.CodeGenerator;
 import com.example.shirodemo.constants.ProjectConstant;
 import com.example.shirodemo.entity.User;
 import com.example.shirodemo.service.RedisService;
+import com.example.shirodemo.service.UUIDService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class ShirodemoApplicationTests {
     private ProjectConstant projectConstant;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private UUIDService uuidService;
 
     @Test
     public void contextLoads() {
@@ -35,5 +38,14 @@ public class ShirodemoApplicationTests {
         redisService.put("four", user, 300);
         System.out.println(">>> " + projectConstant);
     }
+
+    @Test
+    public void testTwo() throws Exception{
+        for(int i=0;i<10;i++) {
+            Long uuid = uuidService.fetchUUID("user", 10, true);
+            System.out.println(">>>" + uuid);
+        }
+    }
+
 
 }

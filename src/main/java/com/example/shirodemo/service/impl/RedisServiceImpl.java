@@ -131,6 +131,26 @@ public class RedisServiceImpl implements RedisService, InitializingBean {
         return false;
     }
 
+    @Override
+    public Long increment(String key) throws Exception {
+        if (!redisStatus) {
+            throw new RuntimeException("redis connection refuse.");
+        }
+        return redisTemplate.boundValueOps(key).increment(1);
+    }
+
+    @Override
+    public boolean expire(String key, int seconds) {
+        if (!redisStatus) {
+            throw new RuntimeException("redis connection refuse.");
+        }
+        if (seconds > 0) {
+            redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
+            return true;
+        }
+        throw new RuntimeException("seconds error.");
+    }
+
     class ConnectionMonitor extends Thread {
         private Logger logger;
         private StringRedisTemplate redisTemplate;

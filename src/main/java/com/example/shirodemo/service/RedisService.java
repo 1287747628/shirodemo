@@ -23,4 +23,8 @@ public interface RedisService {
     boolean putMap(String key, String field, String value);
 
     boolean putMap(String key, String field, String value, int seconds);
+
+    Long increment(String key) throws Exception;
+
+    boolean expire(String key, int seconds) throws Exception;
 }
