@@ -18,7 +18,7 @@ public interface UUIDService {
      * @return 唯一标识
      * @throws Exception 异常
      */
-    Long fetchDailyUUID(String key, Integer length, Boolean haveDay) throws Exception;
+    Long fetchDailyUUID(String key, int length, Boolean haveDay) throws Exception;
 
     /**
      * 全局从 1 开始生成唯一标识
@@ -30,6 +30,6 @@ public interface UUIDService {
      * @return 唯一标识
      * @throws Exception 异常
      */
-    Long fetchUUID(String key, Integer length, Boolean haveDay) throws Exception;
+    Long fetchUUID(String key, int length, Boolean haveDay) throws Exception;
 
 }

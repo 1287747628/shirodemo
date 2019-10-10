@@ -20,7 +20,7 @@ public class UUIDServiceImpl implements UUIDService {
     private RedisService redisService;
 
     @Override
-    public Long fetchDailyUUID(String key, Integer length, Boolean haveDay) throws Exception {
+    public Long fetchDailyUUID(String key, int length, Boolean haveDay) throws Exception {
         Calendar now = new GregorianCalendar();
         String day = df.format(now.getTime());
         key = key + "_" + day;
@@ -36,7 +36,7 @@ public class UUIDServiceImpl implements UUIDService {
     }
 
     @Override
-    public Long fetchUUID(String key, Integer length, Boolean haveDay) throws Exception {
+    public Long fetchUUID(String key, int length, Boolean haveDay) throws Exception {
         Calendar now = new GregorianCalendar();
         Long num = redisService.increment(key);
         if (haveDay) {
@@ -47,7 +47,7 @@ public class UUIDServiceImpl implements UUIDService {
         }
     }
 
-    private Long createUUID(Long num, String day, Integer length) {
+    private Long createUUID(Long num, String day, int length) {
         String id = String.valueOf(num);
         if (id.length() < length) {
             NumberFormat nf = NumberFormat.getInstance();
