@@ -33,6 +33,10 @@
         <!--<appender-ref ref="file" />-->
     </root>
 
+    <logger name="org.apache.zookeeper" level="WARN" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
     <!-- 将指定目录下的日志输出到对应appender -->
     <!--<logger name="com.example.demo.controller" level="INFO" additivity="false">
         <appender-ref ref="file"/>
