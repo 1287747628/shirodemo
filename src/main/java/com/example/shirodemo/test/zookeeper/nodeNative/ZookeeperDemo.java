@@ -1,4 +1,4 @@
-package com.example.shirodemo.test.zookeeper.nodechange;
+package com.example.shirodemo.test.zookeeper.nodeNative;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;

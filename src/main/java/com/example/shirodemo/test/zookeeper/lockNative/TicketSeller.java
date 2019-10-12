@@ -1,4 +1,4 @@
-package com.example.shirodemo.test.zookeeper.clusterlock;
+package com.example.shirodemo.test.zookeeper.lockNative;
 
 import org.apache.zookeeper.KeeperException;
 import org.slf4j.Logger;
