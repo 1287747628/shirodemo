@@ -16,7 +16,9 @@ public class InterProcessLock {
         String lockPath = "/locks";
         InterProcessMutex mutex = new InterProcessMutex(zkClient, lockPath);
         for (int i = 1; i < 11; i++) {
-            new Thread(new CompeteThread(i, mutex)).start();
+            Thread thread=new Thread(new CompeteThread(i, mutex));
+            thread.setName("myThread-" + i);
+            thread.start();
         }
     }
 

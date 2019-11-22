@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,7 +28,9 @@ public class MasterServer {
                 public void run() {
                     try {
                         CuratorFramework zkClient = new MasterServer().schedule(index);
-                        zkClients.add(zkClient);
+                        synchronized (zkClients) {
+                            zkClients.add(zkClient);
+                        }
                     } catch (Exception e) {
                         logger.error("", e);
                     }
@@ -35,19 +38,23 @@ public class MasterServer {
             });
         }
         //
-        boolean running = true;
-        while (running) {
-            int i = 0;
-            for (CuratorFramework zkClient : zkClients) {
-                if (zkClient.isStarted()) {
-                    Thread.sleep(5000);
-                    break;
+        while (true) {
+            boolean running = false;
+            synchronized (zkClients) {
+                Iterator<CuratorFramework> iZkClients = zkClients.iterator();
+                while (iZkClients.hasNext()) {
+                    CuratorFramework zkClient = iZkClients.next();
+                    if (zkClient.isStarted()) {
+                        Thread.sleep(2000);
+                        running = true;
+                        break;
+                    }
                 }
-                i++;
             }
-            if (i == 5) {
-                running = false;
+            if (!running && zkClients.size() > 4) {
+                break;
             }
+            Thread.sleep(1000);
         }
         //
         executorService.shutdownNow();
@@ -61,7 +68,7 @@ public class MasterServer {
             public void isLeader() {
                 try {
                     logger.info("Thread#{} is master", thread);
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                     if (latch != null) {
                         //释放leadership
                         //CloseMode.NOTIFY_LEADER 节点状态改变时,通知LeaderLatchListener
