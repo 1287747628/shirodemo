@@ -69,7 +69,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 server:
-  port: 8080
+  port: 6600
   servlet:
     context-path: /shirodemo/rest/
 

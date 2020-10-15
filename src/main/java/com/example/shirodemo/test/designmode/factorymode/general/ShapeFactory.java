@@ -1,7 +1,13 @@
-package com.example.shirodemo.test.designMode.factoryMode;
+package com.example.shirodemo.test.designmode.factorymode.general;
 
 import com.custom.mutil.StringUtil;
 
+/**
+ * 普通工厂方法
+ *
+ * @author jocken
+ * @date 2020-030
+ */
 public class ShapeFactory {
 
     public static final String CIRCLE = "CIRCLE";

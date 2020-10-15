@@ -12,10 +12,10 @@ public class InterProcessLock {
     private static final Logger logger = LoggerFactory.getLogger(InterProcessLock.class);
 
     public static void main(String[] args) {
-        CuratorFramework zkClient = getZkClient();
-        String lockPath = "/locks";
-        InterProcessMutex mutex = new InterProcessMutex(zkClient, lockPath);
-        for (int i = 1; i < 11; i++) {
+        for (int i = 0; i < 10; i++) {
+            CuratorFramework zkClient = getZkClient();
+            String lockPath = "/locks";
+            InterProcessMutex mutex = new InterProcessMutex(zkClient, lockPath);
             Thread thread=new Thread(new CompeteThread(i, mutex));
             thread.setName("myThread-" + i);
             thread.start();

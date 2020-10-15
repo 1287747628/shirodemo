@@ -1,4 +1,4 @@
-package com.example.shirodemo.test.listCompare;
+package com.example.shirodemo.test.listcompare;
 
 public class Node {
 
