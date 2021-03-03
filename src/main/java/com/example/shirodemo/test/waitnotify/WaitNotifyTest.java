@@ -1,6 +1,6 @@
 package com.example.shirodemo.test.waitnotify;
 
-public class Test {
+public class WaitNotifyTest {
 
     public static void main(String[] args) {
         IStorage storage = new Storage();

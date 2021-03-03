@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ShirodemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ControllerTest {
+public class ControllerAdapterTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
