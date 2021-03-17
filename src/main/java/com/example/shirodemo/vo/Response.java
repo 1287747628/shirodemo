@@ -9,9 +9,10 @@ public class Response {
 
     public Response(int resultCode) {
         this.resultCode = resultCode;
-        if(resultCode == StatusCode.UI.UI_0) {
+        if (resultCode == StatusCode.UI.UI_0) {
             this.setDescription("SUCCESS");
-        } else if(resultCode == StatusCode.UI._UI_1) {
+        }
+        if (resultCode == StatusCode.UI._UI_1) {
             this.setDescription("FAIL");
         }
     }

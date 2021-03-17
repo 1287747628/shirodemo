@@ -10,6 +10,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 用于OSS黑龙江联通现场密码加密升级
+ */
 @Service
 public class HljUpdateUserPasswordImpl {
 
