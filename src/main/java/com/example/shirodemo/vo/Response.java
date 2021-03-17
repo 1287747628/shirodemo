@@ -7,14 +7,25 @@ public class Response {
     private Integer resultCode;
     private String description;
 
-    public Response(int resultCode) {
-        this.resultCode = resultCode;
-        if (resultCode == StatusCode.UI.UI_0) {
-            this.setDescription("SUCCESS");
-        }
-        if (resultCode == StatusCode.UI._UI_1) {
-            this.setDescription("FAIL");
-        }
+    public static Response build(int resultCode, String description) {
+        Response resp = new Response();
+        resp.setResultCode(resultCode);
+        resp.setDescription(description);
+        return resp;
+    }
+
+    public static Response buildFailed(String description) {
+        Response resp = new Response();
+        resp.setResultCode(StatusCode.UI._UI_1);
+        resp.setDescription(description);
+        return resp;
+    }
+
+    public static Response buildSuccess(String description) {
+        Response resp = new Response();
+        resp.setResultCode(StatusCode.UI.UI_0);
+        resp.setDescription(description);
+        return resp;
     }
 
     public Integer getResultCode() {

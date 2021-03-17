@@ -8,7 +8,7 @@ public class ListResponse<T> extends Response {
     private List<T> list;
 
     public ListResponse(int resultCode) {
-        super(resultCode);
+        this.setResultCode(resultCode);
     }
 
     public long getTotal() {

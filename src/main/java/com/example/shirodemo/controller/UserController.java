@@ -10,6 +10,8 @@ import com.example.shirodemo.service.RedisService;
 import com.example.shirodemo.service.UserService;
 import com.example.shirodemo.vo.ListResponse;
 import com.example.shirodemo.vo.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
@@ -29,6 +31,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private UserService userService;
@@ -59,26 +63,23 @@ public class UserController {
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     @ResponseBody
     public Response insert(@RequestBody User user) {
-        Response response = new Response(StatusCode.UI.UI_0);
         userService.insert(user);
-        return response;
+        return Response.buildSuccess("success");
     }
 
     @RequestMapping(path = "/update", method = RequestMethod.POST)
     @ResponseBody
     public Response update(@RequestBody User user) {
-        Response response = new Response(StatusCode.UI.UI_0);
         //userService.update(user, new EntityWrapper<User>().where("id={0}", user.getId()));
         userService.updateForSet("mob='" + user.getMob() + "'", new EntityWrapper<User>().where("id={0}", user.getId()));
-        return response;
+        return Response.buildSuccess("success");
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public Response delete(@RequestBody User user) {
-        Response response = new Response(StatusCode.UI.UI_0);
         userService.deleteById(user.getId());
-        return response;
+        return Response.buildSuccess("success");
     }
 
     @RequestMapping(path = "/select", method = RequestMethod.POST)
@@ -119,19 +120,16 @@ public class UserController {
     @RequestMapping("/test/redis")
     @ResponseBody
     public Response testRest() {
-        Response response = new Response(StatusCode.UI.UI_0);
         redisService.putMap("three", "threeKey", "threeValue", 500);
-        String value = redisService.getMap("three","threeKey");
-        System.out.println(">>> " + JSON.toJSONString(value));
-        return response;
+        String value = redisService.getMap("three", "threeKey");
+        log.info(">>> " + JSON.toJSONString(value));
+        return Response.buildSuccess(JSON.toJSONString(value));
     }
 
     @RequestMapping("/test/constant")
     @ResponseBody
     public Response testConstant() {
-        Response response = new Response(StatusCode.UI.UI_0);
-        System.out.println(">>> " + projectConstant);
-        return response;
+        return Response.buildSuccess(projectConstant.toString());
     }
 
 }
