@@ -96,10 +96,11 @@ public class AESUtil {
 
     public static void main(String[] args) throws Exception {
         String msg = "198c14f2ed15ac5e58f5bfc72c4ee624";
-        System.out.println(">>> " + msg);
-        String encryptStr = encrypt(msg);
-        System.out.println(">>> " + encryptStr);
-        System.out.println(">>> " + decrypt(encryptStr));
+        String msg2 = "198c14f2ed15ac5e58f5bfc72c4ee624";
+        System.out.println(msg.hashCode());
+        System.out.println(msg2.hashCode());
+        System.out.println(">>> " + (msg.hashCode()==msg2.hashCode()));
+
     }
 
 }
