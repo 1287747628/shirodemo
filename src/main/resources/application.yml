@@ -2,7 +2,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.16.10.72:3306/shirodemo?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/shirodemo?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=UTC
     username: appuser
     password: Mysql123+
     druid:

@@ -165,7 +165,7 @@ public class RedisServiceImpl implements RedisService, InitializingBean {
             while (true) {
                 try {
                     Thread.sleep(30000L);
-                    redisTemplate.hasKey("test");
+                    redisTemplate.hasKey("heartbeat");
                     redisStatus = true;
                     logger.info(">>> redis is running");
                 } catch (Exception e) {
